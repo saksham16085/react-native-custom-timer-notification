@@ -62,14 +62,14 @@ class CustomNotificationModule: ReactContextBaseJavaModule {
         intent.putExtra("id",id);
         intent.putExtra("action","press");
         intent.putExtra("payload",payload);
-        val pendingIntent = PendingIntent.getBroadcast(myContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        val pendingIntent = PendingIntent.getBroadcast(myContext, 0, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT);
 
         val onCancelIntent = Intent(myContext, OnClickBroadcastReceiver::class.java)
         onCancelIntent.putExtra("id",id);
         onCancelIntent.putExtra("action","cancel");
         onCancelIntent.putExtra("payload",payload);
         val onDismissPendingIntent =
-          PendingIntent.getBroadcast(myContext, 0, onCancelIntent, 0)
+          PendingIntent.getBroadcast(myContext, 0, onCancelIntent, PendingIntent.FLAG_IMMUTABLE)
 
         val notificationLayout = RemoteViews(packageName, R.layout.notification_collapsed);
 
